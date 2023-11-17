@@ -10,9 +10,13 @@ const {campgroundSchema , reviewSchema} = require('./schemas.js');
 const Review = require('./models/review');
 const session = require('express-session');
 const flash = require('connect-flash');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+const userRoutes = require('./routes/users');
+const campgroundRoutes = require('./routes/campgrounds');
+const reviewRoutes = require('./routes/reviews');
+const passport = require('passport');
 
 const validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
@@ -22,7 +26,7 @@ const validateCampground = (req, res, next) => {
     } else {
         next();
     }
-};
+}; 
 
 const validateReview = (req , res , next) => {
     const {error} = reviewSchema.validate(req.body);
@@ -62,7 +66,16 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req , res , next) => {
+    console.log(req.session)
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -82,8 +95,9 @@ app.get('/' , (req , res) => {
     res.send('Hello from Yelp Camp')
 })
 
-app.use('/campgrounds' , campgrounds);
-app.use('/campgrounds/:id/reviews' , reviews);
+app.use('/' , userRoutes);
+app.use('/campgrounds' , campgroundRoutes);
+app.use('/campgrounds/:id/reviews' , reviewRoutes);
 
 // app.use((err, req, res, next) => {
 //     console.error(err.stack)
