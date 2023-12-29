@@ -24,9 +24,18 @@ const seedDB = async () => {
             author: '6556f792b2ff2c41f1fdff14',
             location : `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
-            image: `https://loremflickr.com/300/300/woods?random=${i}`,
             description: 'A Unicode-based encoding such as UTF-8 can support many languages and can accommodate pages and forms in any mixture of those languages. Its use also eliminates the need for server-side logic to individually determine the character encoding for each page served or each incoming form submission.',
-            price
+            price,
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/dsnmd8nuu/image/upload/v1703686434/YelpCamp/uyi8zug0cuahj6h1hs6y.jpg',
+                    filename: 'YelpCamp/uyi8zug0cuahj6h1hs6y'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dsnmd8nuu/image/upload/v1703686435/YelpCamp/irc12mw32sarc0gijcdf.jpg',
+                    filename: 'YelpCamp/irc12mw32sarc0gijcdf'
+                }
+            ]
         })
         await camp.save();
     }
