@@ -98,8 +98,8 @@ app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'));
 
 app.get('/' , (req , res) => {
-    res.send('Hello from Yelp Camp')
-})
+    res.render('home')
+});
 
 app.use('/' , userRoutes);
 app.use('/campgrounds' , campgroundRoutes);
