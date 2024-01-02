@@ -17,7 +17,7 @@ const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for(let i=0 ; i<50 ; i++){
+    for(let i=0 ; i<300 ; i++){
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
         const camp = new Campground({
@@ -26,10 +26,16 @@ const seedDB = async () => {
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'A Unicode-based encoding such as UTF-8 can support many languages and can accommodate pages and forms in any mixture of those languages. Its use also eliminates the need for server-side logic to individually determine the character encoding for each page served or each incoming form submission.',
             price,
+            geometry: { type: 'Point', 
+                        coordinates: [
+                            cities[random1000].longitude,
+                            cities[random1000].latitude,
+                        ]
+                    },
             images: [
                 {
-                    url: 'https://res.cloudinary.com/dsnmd8nuu/image/upload/v1703686434/YelpCamp/uyi8zug0cuahj6h1hs6y.jpg',
-                    filename: 'YelpCamp/uyi8zug0cuahj6h1hs6y'
+                    url: 'https://res.cloudinary.com/dsnmd8nuu/image/upload/v1704108557/YelpCamp/p41wxgjskw18vvzw3dqk.png',
+                    filename: 'YelpCamp/p41wxgjskw18vvzw3dqk'
                 },
                 {
                     url: 'https://res.cloudinary.com/dsnmd8nuu/image/upload/v1703686435/YelpCamp/irc12mw32sarc0gijcdf.jpg',
