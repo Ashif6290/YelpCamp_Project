@@ -1,6 +1,6 @@
 //const campground = require("../../models/campground");
-campground = JSON.parse(campground);
 
+campground = JSON.parse(campground);
     mapboxgl.accessToken = mapToken;
     const map = new mapboxgl.Map({
         container: 'map', // container ID
